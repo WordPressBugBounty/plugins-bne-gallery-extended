@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: BNE Gallery Extended
- * Version: 1.2.1
+ * Version: 1.2.2
  * Description:  Adds a new shortcode attribute, "display" to the WP [gallery] shortcode allowing to display the gallery as a 3D carousel or masonry grid.
  * Author: Kerry Kline
  * Author URI: http://www.bnecreative.com
@@ -54,7 +54,7 @@ if( !class_exists( 'BNE_GALLERY_EXTENDED' ) ) {
 		function __construct() {
 			
 			// Set Constants
-			define( 'BNE_GALLERY_EXTENDED_VERSION', '1.2.1' );
+			define( 'BNE_GALLERY_EXTENDED_VERSION', '1.2.2' );
 			define( 'BNE_GALLERY_EXTENDED_URI', plugins_url( '', __FILE__ ) );
 			
 			// Filter to hijack the [gallery] shortcode
@@ -91,7 +91,7 @@ if( !class_exists( 'BNE_GALLERY_EXTENDED' ) ) {
 		 *					column attribute as well.
 		 *	
 		 *	@since		v1.0
-		 *	@updated	v1.2.1
+		 *	@updated	v1.2.2
 		 *
 		*/
 		function gallery_shortcode_hijack( $output, $atts, $instance ) {
@@ -168,7 +168,7 @@ if( !class_exists( 'BNE_GALLERY_EXTENDED' ) ) {
 						$output .= '<ul class="carousel-slider gallery">';
 		
 							// Grabs the image ID's in the [gallery] shortcode
-							$image_ids = explode( ',', $atts['ids'] );
+							$image_ids = explode( ',', esc_attr( $atts['ids'] ) );
 							
 							// Check if orderby is set to "rand", if so shuffle the stack
 							if( $atts['orderby'] == 'rand' ) { shuffle( $image_ids ); }
@@ -299,8 +299,8 @@ if( !class_exists( 'BNE_GALLERY_EXTENDED' ) ) {
 					$output .= '<div class="bne-gallery-loader"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div>';
 					
 					// Grabs the image ID's in the [gallery] shortcode
-					$image_ids = explode( ',', $atts['ids'] );
-	
+					$image_ids = explode( ',', esc_attr( $atts['ids'] ) );
+					
 					// Check if orderby is set to "rand", if so shuffle the stack
 					if( $atts['orderby'] == 'rand' ) { shuffle( $image_ids ); }
 					
@@ -308,6 +308,12 @@ if( !class_exists( 'BNE_GALLERY_EXTENDED' ) ) {
 					// Loop through Image Id's
 					foreach( $image_ids as $id ) {
 						$output .= '<div class="gallery-single gallery-item image-id-'.$id.' col-'.$atts['columns'].'-masonry" style="margin-bottom: '.$atts['gutter'].'px; width: '.$grid_col_width.';">';
+							
+							/*
+							LOOK AT NOT OUTPUTING THE IMAGE TWICE FOR CAPTIONS
+							MAKE SURE LINK WORKS ON HOVER 
+							*/
+							
 							
 							// Link: File
 							if( !empty( $atts['link'] ) && 'file' === $atts['link'] ) {

@@ -2,8 +2,8 @@
 Contributors: bluenotes
 Tags: WordPress gallery, gallery, masonry gallery, carousel gallery
 Requires at least: 5.0
-Tested up to: 6.0
-Stable tag: 1.2.1
+Tested up to: 6.7
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -81,6 +81,11 @@ autoplay
 
 
 == Changelog ==
+
+= 1.2.2 Nov 18, 2024 =
+* Security fix for XSS via the shortcode image ID's attribute. My thanks to Peter Thaleikis for the discovery.
+* Note that this is a legacy plugin. Users should move towards the built in block editor gallery features.
+
 
 = 1.2.1 June 3, 20222 =
 * Fix PHP 8.0 warning.
